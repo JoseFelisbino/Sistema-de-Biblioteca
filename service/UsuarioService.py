@@ -8,3 +8,6 @@ class UsuarioService:
     novoUsuario = Usuario(nome, matricula)
     self.lista.append(novoUsuario)
     return novoUsuario
+
+  def listar(self):
+    return self.lista
