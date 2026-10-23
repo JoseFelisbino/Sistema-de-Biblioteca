@@ -1,4 +1,4 @@
-from models.usuario import Usuario 
+from entity.usuario import Usuario 
 
 class UsuarioService:
   def __init__(self):
