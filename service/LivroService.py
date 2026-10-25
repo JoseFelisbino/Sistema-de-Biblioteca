@@ -10,3 +10,7 @@ class LivroService:
         novoLivro = Livro(titulo, autor, ano, disponivel)
         self.lista.append(novoLivro)
         return novoLivro
+    
+    def listar(self):
+        return self.lista
+        
