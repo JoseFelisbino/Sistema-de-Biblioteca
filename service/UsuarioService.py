@@ -1,4 +1,4 @@
-from entity.usuario import Usuario 
+from entity.Usuario import Usuario
 
 class UsuarioService:
   def __init__(self):
