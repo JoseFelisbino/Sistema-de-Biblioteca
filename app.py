@@ -10,7 +10,7 @@ while opcao != 3:
     print("2 - Listar usuários")
     print("3 - Sair")
 
-    opcao = int(input("Escolha uma opção: "))
+    opcao = int(input("\nEscolha uma opção: "))
 
     if opcao == 1:
         nome = input("Digite o nome do usuário: ")
@@ -20,6 +20,9 @@ while opcao != 3:
 
     elif opcao == 2:
         print("Listando usuários...")
+        usuarios = service.listar()
+        for usuario in usuarios:
+            print(usuario)
 
     elif opcao == 3:
         print("Encerrando o programa...")
