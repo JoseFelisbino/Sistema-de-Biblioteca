@@ -1,6 +1,8 @@
 from service.UsuarioService import UsuarioService
+from service.LivroService import LivroService
 
-service = UsuarioService()
+serviceUsuario = UsuarioService()
+
 
 opcao = 0
 
@@ -15,12 +17,12 @@ while opcao != 3:
     if opcao == 1:
         nome = input("Digite o nome do usuário: ")
         matricula = input("Digite a matrícula do usuário: ")
-        service.cadastrar(nome, matricula)
+        serviceUsuario.cadastrar(nome, matricula)
         print("Usuário cadastrado com sucesso!")
 
     elif opcao == 2:
         print("Listando usuários...")
-        usuarios = service.listar()
+        usuarios = serviceUsuario.listar()
         for usuario in usuarios:
             print(usuario)
 
