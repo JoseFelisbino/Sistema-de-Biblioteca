@@ -7,13 +7,14 @@ serviceLivro = LivroService()
 
 opcao = 0
 
-while opcao != 5:
+while opcao != 6:
     print("\n===== MENU PRINCIPAL =====")
     print("1 - Cadastrar usuário")
     print("2 - Listar usuários")
     print("3 - Cadastrar Livro")
     print("4 - Listar Livros")
-    print("5 - Sair")
+    print("5 - Editar Livro")
+    print("6 - Sair")
 
     opcao = int(input("\nEscolha uma opção: "))
 
@@ -44,6 +45,29 @@ while opcao != 5:
             print(livro)
 
     elif opcao == 5:
+        id_livro = int(input("Digite o ID do livro que deseja editar: "))
+        novo_titulo = input("Digite o novo título (ou pressione Enter para manter o atual): ")
+        novo_autor = input("Digite o novo autor (ou pressione Enter para manter o atual): ")
+        novo_ano = input("Digite o novo ano (ou pressione Enter para manter o atual): ")
+        novo_disponivel = input("Digite a nova disponibilidade (true/false) (ou pressione Enter para manter a atual): ")
+
+        if novo_titulo == "":
+            novo_titulo = None
+        if novo_autor == "":
+            novo_autor = None
+        if novo_ano == "":
+            novo_ano = None
+        if novo_disponivel == "":
+            novo_disponivel = None
+
+        livro_editado = serviceLivro.editar(id_livro, novo_titulo, novo_autor, novo_ano, novo_disponivel)
+
+        if livro_editado:
+            print("Livro editado com sucesso!")
+        else:
+            print("Livro não encontrado.")
+
+    elif opcao == 6:
         print("Saindo...")
 
     else:
