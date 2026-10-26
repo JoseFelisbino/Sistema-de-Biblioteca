@@ -7,12 +7,13 @@ serviceLivro = LivroService()
 
 opcao = 0
 
-while opcao != 4:
+while opcao != 5:
     print("\n===== MENU PRINCIPAL =====")
     print("1 - Cadastrar usuário")
     print("2 - Listar usuários")
     print("3 - Cadastrar Livro")
-    print("4 - Sair")
+    print("4 - Listar Livros")
+    print("5 - Sair")
 
     opcao = int(input("\nEscolha uma opção: "))
 
@@ -37,6 +38,12 @@ while opcao != 4:
         print("Livro cadastrado com sucesso!")
 
     elif opcao == 4:
+        print("Listando Livros...")
+        livros = serviceLivro.listar()
+        for livro in livros:
+            print(livro)
+
+    elif opcao == 5:
         print("Saindo...")
 
     else:
