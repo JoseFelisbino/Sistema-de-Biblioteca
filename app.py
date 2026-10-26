@@ -7,14 +7,15 @@ serviceLivro = LivroService()
 
 opcao = 0
 
-while opcao != 6:
+while opcao != 7:
     print("\n===== MENU PRINCIPAL =====")
     print("1 - Cadastrar usuário")
     print("2 - Listar usuários")
     print("3 - Cadastrar Livro")
     print("4 - Listar Livros")
     print("5 - Editar Livro")
-    print("6 - Sair")
+    print("6 - Deletar Livro")
+    print("7 - Sair")
 
     opcao = int(input("\nEscolha uma opção: "))
 
@@ -68,6 +69,14 @@ while opcao != 6:
             print("Livro não encontrado.")
 
     elif opcao == 6:
+        id_livro = int(input("Digite o ID do livro que deseja deletar: "))
+        livro_deletado = serviceLivro.deletar(id_livro)
+        if livro_deletado:
+            print("Livro deletado com sucesso!")
+        else:
+            print("Livro não encontrado.")
+
+    elif opcao == 7:
         print("Saindo...")
 
     else:
