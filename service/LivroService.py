@@ -26,5 +26,11 @@ class LivroService:
                     livro.disponivel = novo_disponivel
 
                 return livro
+    
+    def deletar(self, id_livro):
+        for livro in self.lista:
+            if livro.idLivro == id_livro:
+                self.lista.remove(livro)
+                return livro
 
         return None
