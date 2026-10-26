@@ -2,15 +2,17 @@ from service.UsuarioService import UsuarioService
 from service.LivroService import LivroService
 
 serviceUsuario = UsuarioService()
+serviceLivro = LivroService()
 
 
 opcao = 0
 
-while opcao != 3:
+while opcao != 4:
     print("\n===== MENU PRINCIPAL =====")
     print("1 - Cadastrar usuário")
     print("2 - Listar usuários")
-    print("3 - Sair")
+    print("3 - Cadastrar Livro")
+    print("4 - Sair")
 
     opcao = int(input("\nEscolha uma opção: "))
 
@@ -27,7 +29,15 @@ while opcao != 3:
             print(usuario)
 
     elif opcao == 3:
-        print("Encerrando o programa...")
+        titulo = input("Digite o titulo: ")
+        autor = input("Digite o autor: ")
+        ano = input("Digite o ano: ")
+        disponivel = input("Digite o disponivel (true/false): ")
+        serviceLivro.cadastrar(titulo, autor, ano, disponivel)
+        print("Livro cadastrado com sucesso!")
+
+    elif opcao == 4:
+        print("Saindo...")
 
     else:
         print("Opção inválida! Tente novamente.")
