@@ -1,12 +1,27 @@
 from service.UsuarioService import UsuarioService
 from service.LivroService import LivroService
 from service.EmprestimoService import EmprestimoService
+from service.PersistenciaService import PersistenciaService
 
 
 serviceUsuario = UsuarioService()
 serviceLivro = LivroService()
 serviceEmprestimo = EmprestimoService()
+persistencia = PersistenciaService()
 
+try:
+    if persistencia.carregar(
+        serviceLivro,
+        serviceUsuario,
+        serviceEmprestimo
+    ):
+        print("Dados anteriores carregados do disco.")
+    else:
+        print("Nenhum arquivo encontrado. Biblioteca vazia.")
+
+except RuntimeError as erro:
+    print(erro)
+    raise SystemExit(1)
 
 opcao = 0
 
@@ -33,6 +48,13 @@ while opcao != 10:
         nome = input("Digite o nome do usuário: ")
         matricula = input("Digite a matrícula do usuário: ")
         serviceUsuario.cadastrar(nome, matricula)
+
+        persistencia.salvar(
+            serviceLivro,
+            serviceUsuario,
+            serviceEmprestimo
+        )
+
         print("Usuário cadastrado com sucesso!")
 
     elif opcao == 2:
@@ -47,6 +69,13 @@ while opcao != 10:
         ano = input("Digite o ano: ")
         disponivel = input("Digite o disponivel (true/false): ")
         serviceLivro.cadastrar(titulo, autor, ano, disponivel)
+
+        persistencia.salvar(
+            serviceLivro,
+            serviceUsuario,
+            serviceEmprestimo
+        )
+
         print("Livro cadastrado com sucesso!")
 
     elif opcao == 4:
@@ -79,7 +108,15 @@ while opcao != 10:
         livro_editado = serviceLivro.editar(id_livro, novo_titulo, novo_autor, novo_ano, novo_disponivel)
 
         if livro_editado:
+
+            persistencia.salvar(
+                serviceLivro,
+                serviceUsuario,
+                serviceEmprestimo
+            )
+
             print("Livro editado com sucesso!")
+
         else:
             print("Livro não encontrado.")
 
@@ -92,6 +129,13 @@ while opcao != 10:
 
         livro_deletado = serviceLivro.deletar(id_livro)
         if livro_deletado:
+
+            persistencia.salvar(
+                serviceLivro,
+                serviceUsuario,
+                serviceEmprestimo
+            )
+
             print("Livro deletado com sucesso!")
         else:
             print("Livro não encontrado.")
@@ -158,6 +202,12 @@ while opcao != 10:
         print(mensagem)
 
         if emprestimo:
+
+            persistencia.salvar(
+                serviceLivro,
+                serviceUsuario,
+                serviceEmprestimo
+            )
             print(emprestimo)
 
 
@@ -184,6 +234,12 @@ while opcao != 10:
 
         sucesso, mensagem = serviceEmprestimo.devolver_livro(
             id_emprestimo
+        )
+
+        persistencia.salvar(
+            serviceLivro,
+            serviceUsuario,
+            serviceEmprestimo
         )
 
         print(mensagem)
