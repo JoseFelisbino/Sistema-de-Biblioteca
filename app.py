@@ -1,13 +1,16 @@
 from service.UsuarioService import UsuarioService
 from service.LivroService import LivroService
+from service.EmprestimoService import EmprestimoService
+
 
 serviceUsuario = UsuarioService()
 serviceLivro = LivroService()
+serviceEmprestimo = EmprestimoService()
 
 
 opcao = 0
 
-while opcao != 7:
+while opcao != 9:
     print("\n===== MENU PRINCIPAL =====")
     print("1 - Cadastrar usuário")
     print("2 - Listar usuários")
@@ -15,7 +18,9 @@ while opcao != 7:
     print("4 - Listar Livros")
     print("5 - Editar Livro")
     print("6 - Deletar Livro")
-    print("7 - Sair")
+    print("7 - Realizar empréstimo")
+    print("8 - Listar empréstimos de um usuário")
+    print("9 - Sair")
 
     opcao = int(input("\nEscolha uma opção: "))
 
@@ -77,7 +82,40 @@ while opcao != 7:
             print("Livro não encontrado.")
 
     elif opcao == 7:
-        print("Saindo...")
+        print("\n===== REALIZAR EMPRÉSTIMO =====")
+
+        print("\nLivros cadastrados:")
+        for livro in serviceLivro.listar():
+            print(livro)
+
+        id_livro = int(input("\nDigite o ID do livro: "))
+
+        livro = next(
+            (l for l in serviceLivro.listar()
+             if l.idLivro == id_livro),
+            None
+        )
+
+        print("\nUsuários cadastrados:")
+        for usuario in serviceUsuario.listar():
+            print(usuario)
+
+        id_usuario = int(input("\nDigite o ID do usuário: "))
+
+        usuario = next(
+            (u for u in serviceUsuario.listar()
+             if u.idUsuario == id_usuario),
+            None
+        )
+
+        emprestimo, mensagem = (
+            serviceEmprestimo.realizar_emprestimo(livro, usuario)
+        )
+
+        print(mensagem)
+
+        if emprestimo:
+            print(emprestimo)
 
     else:
         print("Opção inválida! Tente novamente.")
