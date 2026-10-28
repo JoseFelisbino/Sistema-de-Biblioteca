@@ -95,7 +95,10 @@ class PersistenciaService:
                     item["titulo"],
                     item["autor"],
                     item["ano"],
-                    bool(item["disponivel"]),
+                    (item["disponivel"]
+                     if isinstance(item["disponivel"], bool)
+                     else str(item["disponivel"]).strip().lower() == "true"
+                    )
                 )
 
                 livro.idLivro = int(item["id"])
