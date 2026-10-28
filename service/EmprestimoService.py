@@ -35,3 +35,10 @@ class EmprestimoService:
         livro.disponivel = False
 
         return emprestimo, "Empréstimo realizado com sucesso!"
+
+    def listar_por_usuario(self, id_usuario):
+        return [
+            emprestimo
+            for emprestimo in self.lista
+            if emprestimo.usuario.idUsuario == id_usuario
+        ]
