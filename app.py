@@ -10,7 +10,7 @@ serviceEmprestimo = EmprestimoService()
 
 opcao = 0
 
-while opcao != 9:
+while opcao != 10:
     print("\n===== MENU PRINCIPAL =====")
     print("1 - Cadastrar usuário")
     print("2 - Listar usuários")
@@ -19,8 +19,9 @@ while opcao != 9:
     print("5 - Editar Livro")
     print("6 - Deletar Livro")
     print("7 - Realizar empréstimo")
-    print("8 - Listar empréstimos de um usuário")
-    print("9 - Sair")
+    print("8 - Devolver livro")
+    print("9 - Listar empréstimos por usuários")
+    print("10 - Sair")
 
     opcao = int(input("\nEscolha uma opção: "))
 
@@ -117,7 +118,35 @@ while opcao != 9:
         if emprestimo:
             print(emprestimo)
 
+
     elif opcao == 8:
+            ativos = serviceEmprestimo.listar_ativos()
+
+            if not ativos:
+                print("Não há empréstimos ativos para devolver.")
+                continue
+
+            print("\n===== EMPRÉSTIMOS ATIVOS =====")
+
+            for emprestimo in ativos:
+                print(emprestimo)
+
+            try:
+                id_emprestimo = int(
+                    input("Digite o ID do empréstimo que deseja devolver: ")
+                )
+            except ValueError:
+                print("ID inválido.")
+                continue
+
+            sucesso, mensagem = serviceEmprestimo.devolver_livro(
+                id_emprestimo
+            )
+
+            print(mensagem)
+
+
+    elif opcao == 9:
         print("\n===== EMPRÉSTIMOS POR USUÁRIO =====")
 
         id_usuario = int(
@@ -134,7 +163,7 @@ while opcao != 9:
         else:
             print("Nenhum empréstimo encontrado para esse usuário.")
 
-    elif opcao == 9:
+    elif opcao == 10:
         print("Saindo...")
 
     else:
