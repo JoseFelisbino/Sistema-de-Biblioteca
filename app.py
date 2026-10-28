@@ -117,6 +117,26 @@ while opcao != 9:
         if emprestimo:
             print(emprestimo)
 
+    elif opcao == 8:
+        print("\n===== EMPRÉSTIMOS POR USUÁRIO =====")
+
+        id_usuario = int(
+            input("Digite o ID do usuário: ")
+        )
+
+        emprestimos = (
+            serviceEmprestimo.listar_por_usuario(id_usuario)
+        )
+
+        if emprestimos:
+            for emprestimo in emprestimos:
+                print(emprestimo)
+        else:
+            print("Nenhum empréstimo encontrado para esse usuário.")
+
+    elif opcao == 9:
+        print("Saindo...")
+
     else:
         print("Opção inválida! Tente novamente.")
 
