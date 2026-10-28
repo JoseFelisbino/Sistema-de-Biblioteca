@@ -13,15 +13,15 @@ class LivroService:
         return self.lista
 
 
-def editar(self, id_livro, novo_titulo=None, novo_autor=None,
-    novo_ano=None, novo_disponivel=None, emprestimos=None):
+    def editar(self, id_livro, novo_titulo=None, novo_autor=None,
+        novo_ano=None, novo_disponivel=None, emprestimos=None):
         
-    for livro in self.lista:
-        if livro.idLivro == id_livro:
+        for livro in self.lista:
+            if livro.idLivro == id_livro:
 
-            if novo_disponivel is not None:
-                if isinstance(novo_disponivel, str):
-                    valor = novo_disponivel.strip().lower()
+                if novo_disponivel is not None:
+                    if isinstance(novo_disponivel, str):
+                        valor = novo_disponivel.strip().lower()
 
                     if valor not in ("true", "false"):
                         return False
@@ -51,7 +51,7 @@ def editar(self, id_livro, novo_titulo=None, novo_autor=None,
 
             return livro
 
-    return None
+        return None
 
     
     def deletar(self, id_livro):
