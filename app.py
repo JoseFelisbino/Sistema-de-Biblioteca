@@ -128,7 +128,22 @@ while opcao != 10:
             print("ID inválido. Digite um número inteiro.")
             continue
 
+        emprestimos = serviceEmprestimo.listar()
+
+        livro_com_historico = any(
+            e.livro.idLivro == id_livro
+            for e in emprestimos
+        )
+
+        if livro_com_historico:
+            print("Não é possível remover este livro, "
+            "pois ele possui histórico de empréstimos."
+            )
+            
+        continue
+
         livro_deletado = serviceLivro.deletar(id_livro)
+
         if livro_deletado:
 
             persistencia.salvar(
