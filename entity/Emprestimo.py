@@ -1,3 +1,4 @@
+from datetime import date
 
 class Emprestimo:
     _contador_id = 1
