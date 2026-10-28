@@ -12,6 +12,7 @@ class Emprestimo:
         self.data_devolucao = data_devolucao
         self.data_devolucao_real = None
         self.status = "EM ANDAMENTO"
+        
 
     def __str__(self):
         devolucao_real = (
@@ -26,5 +27,14 @@ class Emprestimo:
             f"Empréstimo: {self.data_emprestimo}, "
             f"Devolução prevista: {self.data_devolucao}, "
             f"Devolução efetiva: {devolucao_real}, "
-            f"Status: {self.status}"
+            f"Status: {self.status}, "
+            f"Atrasado: {'Sim' if self.atrasado else 'Não'}, "
         )
+
+    @property
+    def atrasado(self):
+        return (
+                self.status == "EM ANDAMENTO"
+                and date.today() > self.data_devolucao
+        )
+
