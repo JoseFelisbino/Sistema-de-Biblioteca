@@ -105,7 +105,7 @@ while opcao != 10:
         if novo_disponivel == "":
             novo_disponivel = None
 
-    livro_editado = serviceLivro.editar( id_livro, novo_titulo, novo_autor,
+        livro_editado = serviceLivro.editar( id_livro, novo_titulo, novo_autor,
         novo_ano, novo_disponivel, serviceEmprestimo.listar())
         
         if livro_editado:
@@ -140,7 +140,7 @@ while opcao != 10:
             "pois ele possui histórico de empréstimos."
             )
             
-        continue
+            continue
 
         livro_deletado = serviceLivro.deletar(id_livro)
 
@@ -298,4 +298,4 @@ while opcao != 10:
     else:
         print("Opção inválida! Tente novamente.")
 
-print("Programa finalizado.")
+        print("Programa finalizado.")
