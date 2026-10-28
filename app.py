@@ -23,7 +23,11 @@ while opcao != 10:
     print("9 - Listar empréstimos por usuários")
     print("10 - Sair")
 
-    opcao = int(input("\nEscolha uma opção: "))
+    try:
+        opcao = int(input("\nEscolha uma opção: "))
+    except ValueError:
+        print("Digite uma opção numérica válida.")
+        continue
 
     if opcao == 1:
         nome = input("Digite o nome do usuário: ")
@@ -52,7 +56,12 @@ while opcao != 10:
             print(livro)
 
     elif opcao == 5:
-        id_livro = int(input("Digite o ID do livro que deseja editar: "))
+        try:
+            id_livro = int(input("\nDigite o ID do livro: "))
+        except ValueError:
+            print("ID inválido. Digite um número inteiro.")
+            continue
+
         novo_titulo = input("Digite o novo título (ou pressione Enter para manter o atual): ")
         novo_autor = input("Digite o novo autor (ou pressione Enter para manter o atual): ")
         novo_ano = input("Digite o novo ano (ou pressione Enter para manter o atual): ")
@@ -75,42 +84,75 @@ while opcao != 10:
             print("Livro não encontrado.")
 
     elif opcao == 6:
-        id_livro = int(input("Digite o ID do livro que deseja deletar: "))
+        try:
+            id_livro = int(input("\nDigite o ID do livro que deseja deletar: "))
+        except ValueError:
+            print("ID inválido. Digite um número inteiro.")
+            continue
+
         livro_deletado = serviceLivro.deletar(id_livro)
         if livro_deletado:
             print("Livro deletado com sucesso!")
         else:
             print("Livro não encontrado.")
 
+
     elif opcao == 7:
         print("\n===== REALIZAR EMPRÉSTIMO =====")
 
-        print("\nLivros cadastrados:")
-        for livro in serviceLivro.listar():
-            print(livro)
+        livros = serviceLivro.listar()
+        usuarios = serviceUsuario.listar()
 
-        id_livro = int(input("\nDigite o ID do livro: "))
+        if not livros:
+            print("Não há livros cadastrados.")
+            continue
+
+        if not usuarios:
+            print("Não há usuários cadastrados.")
+            continue
+
+        print("\nLivros cadastrados:")
+        for livro_cadastrado in livros:
+            print(livro_cadastrado)
+
+        try:
+            id_livro = int(input("\nDigite o ID do livro: "))
+        except ValueError:
+            print("ID inválido. Digite um número inteiro.")
+            continue
 
         livro = next(
-            (l for l in serviceLivro.listar()
-             if l.idLivro == id_livro),
+            (l for l in livros if l.idLivro == id_livro),
             None
         )
+
+        if livro is None:
+            print("Livro não encontrado.")
+            continue
 
         print("\nUsuários cadastrados:")
-        for usuario in serviceUsuario.listar():
-            print(usuario)
+        for usuario_cadastrado in usuarios:
+            print(usuario_cadastrado)
 
-        id_usuario = int(input("\nDigite o ID do usuário: "))
+        try:
+            id_usuario = int(input("\nDigite o ID do usuário: "))
+        except ValueError:
+            print("ID inválido. Digite um número inteiro.")
+            continue
 
         usuario = next(
-            (u for u in serviceUsuario.listar()
-             if u.idUsuario == id_usuario),
+            (u for u in usuarios if u.idUsuario == id_usuario),
             None
         )
 
+        if usuario is None:
+            print("Usuário não encontrado.")
+            continue
+
         emprestimo, mensagem = (
-            serviceEmprestimo.realizar_emprestimo(livro, usuario)
+            serviceEmprestimo.realizar_emprestimo(
+                livro, usuario
+            )
         )
 
         print(mensagem)
@@ -119,43 +161,56 @@ while opcao != 10:
             print(emprestimo)
 
 
+
     elif opcao == 8:
-            ativos = serviceEmprestimo.listar_ativos()
+        ativos = serviceEmprestimo.listar_ativos()
 
-            if not ativos:
-                print("Não há empréstimos ativos para devolver.")
-                continue
+        if not ativos:
+            print("Não há empréstimos ativos para devolver.")
+            continue
 
-            print("\n===== EMPRÉSTIMOS ATIVOS =====")
+        print("\n===== EMPRÉSTIMOS ATIVOS =====")
 
-            for emprestimo in ativos:
-                print(emprestimo)
+        for emprestimo in ativos:
+            print(emprestimo)
 
-            try:
-                id_emprestimo = int(
-                    input("Digite o ID do empréstimo que deseja devolver: ")
-                )
-            except ValueError:
-                print("ID inválido.")
-                continue
-
-            sucesso, mensagem = serviceEmprestimo.devolver_livro(
-                id_emprestimo
+        try:
+            id_emprestimo = int(
+                input("Digite o ID do empréstimo que deseja devolver: ")
             )
+        except ValueError:
+            print("ID inválido.")
+            continue
 
-            print(mensagem)
+        sucesso, mensagem = serviceEmprestimo.devolver_livro(
+            id_emprestimo
+        )
+
+        print(mensagem)
 
 
     elif opcao == 9:
         print("\n===== EMPRÉSTIMOS POR USUÁRIO =====")
 
-        id_usuario = int(
-            input("Digite o ID do usuário: ")
+        try:
+            id_usuario = int(input("Digite o ID do usuário: "))
+        except ValueError:
+            print("ID inválido.")
+            continue
+
+        usuario = next(
+            (
+                u for u in serviceUsuario.listar()
+                if u.idUsuario == id_usuario
+            ),
+            None
         )
 
-        emprestimos = (
-            serviceEmprestimo.listar_por_usuario(id_usuario)
-        )
+        if usuario is None:
+            print("Usuário não encontrado.")
+            continue
+
+        emprestimos = serviceEmprestimo.listar_por_usuario(id_usuario)
 
         if emprestimos:
             for emprestimo in emprestimos:
