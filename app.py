@@ -105,8 +105,9 @@ while opcao != 10:
         if novo_disponivel == "":
             novo_disponivel = None
 
-        livro_editado = serviceLivro.editar(id_livro, novo_titulo, novo_autor, novo_ano, novo_disponivel)
-
+    livro_editado = serviceLivro.editar( id_livro, novo_titulo, novo_autor,
+        novo_ano, novo_disponivel, serviceEmprestimo.listar())
+        
         if livro_editado:
 
             persistencia.salvar(
