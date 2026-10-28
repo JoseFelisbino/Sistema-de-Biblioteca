@@ -248,15 +248,17 @@ while opcao != 10:
             print("ID inválido.")
             continue
 
+
         sucesso, mensagem = serviceEmprestimo.devolver_livro(
             id_emprestimo
         )
 
-        persistencia.salvar(
-            serviceLivro,
-            serviceUsuario,
-            serviceEmprestimo
-        )
+        if sucesso:
+            persistencia.salvar(
+                serviceLivro,
+                serviceUsuario,
+                serviceEmprestimo
+            )
 
         print(mensagem)
 
